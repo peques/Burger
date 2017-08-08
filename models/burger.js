@@ -9,11 +9,12 @@ var burger = {
 	},
 	create: function(cols, vals, callback) {
 		orm.create('burgers', cols, vals, function(result){
+		// 	callback(result);
 			callback(result);
-		});
+		 });
 	},
-	delete: function(condition, callback) {
-		orm.delete('burgers', condition, function(result){
+	update: function(conditionCol, condition, newValueCol, newValue, callback) {
+		orm.update('burgers', conditionCol, condition, newValueCol, newValue, function(result) {
 			callback(result);
 		});
 	}
@@ -23,3 +24,4 @@ var burger = {
 
 // EXPORT FUNCTIONS FOR THE BURGERS_CONTROLLER.JS
 module.exports = burger;
+

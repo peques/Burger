@@ -3,10 +3,14 @@
 <html>
 
 <head>
-
-    <title>Eat Da Burger!</title>
-
-	<link rel="stylesheet" type="text/css" href="./assets/css/burger_style.css">
+    <title>Krust Krab Online</title>
+    <link rel="stylesheet" type="text/css" href="./assets/css/burger_style.css">
+    
+    <script
+          src="https://code.jquery.com/jquery-3.2.1.js"
+          integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+          crossorigin="anonymous">         
+    </script>
 
 </head>
 
@@ -15,54 +19,53 @@
         <div class="row">
             <div class="col-xs-12 text-center" id="top-bar">
                 <img src="./assets/img/krabbypatty.jpg" alt="burger" />
-                <h1> Eat Da Burger! </h1>
+                <h1> Welcome to the Krusty Krab App! </h1>
             </div>
-            <div class="col-xs-6 text-center" class="task">
+
+            <div class="container">
                 <div class="row">
-                    {{#each burger_data}} {{#unless this.devoured}}
-                    <div class="col-xs-9 text-center">
-                        <pre>{{this.id}}. {{this.burger_name}}
-                    </pre>
-                        <!-- {{this.Date}} -->
+                    <div class="col-xs-12 text-center enter_section">
+                        <!-- <form action="/" method="POST"> -->
+                        <input type="text" class="form-control" id="burger_name">
+                        <button type="submit" class="btn btn-primary" id="submit">Add to Menu</button>
+                    <!-- </form> -->
+                        <p>Enter a Krabby Patty you want to eat!</p>
                     </div>
-                    <div class="col-xs-3 text-center">
-                        <form method="POST" action="/burgers/update?_method=PUT" class="button-size">
-                            <input input type="hidden" type="text" name="burger_id" value={{this.id}}>
-                            <br>
-                            <button type="submit" class="btn btn-default">OMNOMNOMNOM!</button>
-                        </form>
-                    </div>
-                    {{/unless}} {{/each}}
                 </div>
             </div>
+
             <div class="col-xs-6 text-center" class="task">
-                {{#each burger_data}} {{#if this.devoured}}
-                <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly> {{/if}} {{/each}}
+                <div class="row">
+                    
+                        {{{body}}}
+                        <br>
+                </div>
             </div>
+
+
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12 text-center enter_section">
-                <form action="/burgers/create" method="POST">
-                    <input type="text" class="form-control" name="burger_name" value="" id="enter_text">
-                    <button type="submit" class="btn btn-primary" id="text-enter-button">Submit</button>
-                </form>
-                <p>Enter a burger you want to eat Click the "Submit" button.</p>
-            </div>
-        </div>
+    <div class="col-xs-6 text-center" class="task">
+        {{#each burger_data}} {{#if this.devoured}}
+        <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly> {{/if}} {{/each}}
     </div>
 </body>
 
-<script type="text/javascript">
+        <script type="text/javascript">
+        $("#submit").on("click", function() {
+            let burgerName = $('#burger_name').val().trim();
 
-	$("#submit").on("click", function(){
-		let burgerName = $("#burgerName").val().trim();
-		//windows.location = data.redirect;
-	});
+            console.log("working");
 
-</script>
+            $.post("/", {burger_name: burgerName}, function(res){
+                if (res) {
+                    window.location = res.redirect;     
+                }
+            });
 
+
+        });
+        </script>
 
 </html>
 

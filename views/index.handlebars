@@ -1,1 +1,34 @@
 <!--  FORMATS BURGER DISPLAY LOGIC, SENDS TO MAIN.HANDLEBARS -->
+<!-- <div>
+    <h3>TEST BURGER NAME</h3>
+    <p>This Shit is good yo</p>
+    <button>EAT</button>
+    <br>
+</div>
+ -->
+
+
+
+{{#each burgers}} 
+{{#unless this.devoured}}
+<div class="left">
+	<pre>
+          {{this.id}} {{this.burger_name}}
+    </pre>
+</div>
+
+<div class="col-xs-3 text-center">
+    <form method="POST" action="/{{this.id}}?_method=PUT" class="button-size">
+        <input input type="hidden" type="text" name="burger_id" value={{this.id}}>
+        <br>
+        <button type="submit" class="btn btn-default">OMNOMNOMNOM!</button>
+    </form>
+</div>
+{{/unless}} 
+{{/each}}
+
+
+	<div class="col-xs-6 text-center" class="task">
+        {{#each burgers}} {{#if this.devoured}}
+        <input class="form-control" type="text" placeholder="{{this.id}} . {{this.burger_name}}" readonly> {{/if}} {{/each}}
+    </div>

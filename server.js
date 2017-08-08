@@ -17,6 +17,8 @@ app.use(express.static('public'));
 //OVERRIDES UPDATE/DELETE METHODS
 app.use(methodOverride("_method"));
 
+app.use(bodyParser.urlencoded({extended: false}));
+
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
